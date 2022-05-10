@@ -17,7 +17,7 @@ void clear();
 
 //grid
 int game[len_grid][len_grid];
-
+int game_copy[len_grid][len_grid];
 //window size
 int width;
 int height;

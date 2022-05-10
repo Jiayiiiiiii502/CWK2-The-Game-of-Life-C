@@ -7,12 +7,14 @@
 #include "SDL/SDL2/SDL.h"
 int game_init(char* filename){
     FILE *file=fopen(filename,"rb");
-        int game_width=width/20;
-        int game_height=height/20;
+        int game_width;
+        int game_height;
         while(!feof(file)){
             fscanf(file,"%d",&game_interval);
             fscanf(file,"%d",&height);
             fscanf(file,"%d",&width);
+            game_width=width/20;
+            game_height=height/20;
             break;
         }
         int m,n;
@@ -31,9 +33,11 @@ int game_store(char* filename){
     fprintf(file,"%d\n",height);
     fprintf(file,"%d\n",width);
     int m,n;
-    for(m=0;m<width/20;m++){
-        for(n=0;n<height/20;n++){
-            fprintf(file,"%d ",game[m][n]);
+    int game_width=width/20;
+    int game_height=height/20;
+    for(m=0;m<game_width;m++){
+        for(n=0;n<game_height;n++){
+            fprintf(file,"%d ",game_copy[m][n]);
         }
         fprintf(file,"\n");
     }
@@ -77,6 +81,7 @@ void game_show(){
                         game_random();
                     } else if (event.key.keysym.sym == SDLK_b) {
                         printf("Store the data and over the game!\n");
+                        game_temp(game,game_copy);
                         game_store("history.txt");
                         game_running=0;
                     }
@@ -96,6 +101,13 @@ void game_show(){
                 controller = game_interval;
             } else {
                 controller--;
+                int m,n;
+                for(m=0;m<len_grid;m++){
+                    for(n=0;n<len_grid;n++){
+                        printf("%d ",game[m][n]);
+                    }
+                    printf("\n");
+                }
             }
         }
         game_render(renderer,game_paused);

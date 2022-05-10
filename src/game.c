@@ -9,6 +9,8 @@
 #include "gameStructure.h"
 //manipulate the grid
 void game_update(){
+    int grid_temp[len_grid][len_grid]={0};
+    game_temp(game,grid_temp);
     for(int x=0;x<len_grid;x++){
         for(int y=0;y<len_grid;y++){
             if(x==0 || y==0){
@@ -23,6 +25,7 @@ void game_update(){
             }
         }
     }
+    game_temp(grid_temp,game);
 }
 
 //get the alive neighbor number of one cell
@@ -48,7 +51,7 @@ int cell_neighbor(int x,int y){
 
 //copy the current grid to temp grid
 void game_temp(int cur[len_grid][len_grid], int temp[len_grid][len_grid]){
-    int m,n=0;
+    int m,n;
     for(m=0;m<len_grid;m++){
         for(n=0;n<len_grid;n++){
             temp[m][n]=cur[m][n];
