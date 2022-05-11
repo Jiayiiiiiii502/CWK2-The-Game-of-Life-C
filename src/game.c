@@ -2,21 +2,49 @@
 // Created by Jiayi on 2022/4/21.
 //
 
-//int game_temp(int cur[][],int temp[][]){
-//
-//}
-
 #include "gameStructure.h"
-//manipulate the grid
+
+int cell_neighbor_top(int y){
+    int alive_neighbor=0;
+    if(y==0){
+        alive_neighbor=game[0][1]+game[1][0]+game[1][1];
+    }
+    else if(y==(width/40)-1){
+        alive_neighbor=game[0][y-1]+game[1][y-1]+game[1][y];
+    }
+    else{
+        alive_neighbor=game[0][y-1]+game[0][y+1]+game[1][y-1]+game[1][y]+game[1][y+1];
+    }
+    return alive_neighbor;
+}
+int cell_neighbor_left(int x){
+    int alive_neighbor;
+    if(x==0){
+        alive_neighbor=game[0][1]+game[1][0]+game[1][1];
+    }
+    else if(x==(height/40)-1){
+        alive_neighbor=game[x-1][0]+game[x-1][1]+game[x][1];
+    }
+    else{
+        alive_neighbor=game[x-1][0]+game[x-1][1]+game[x][1]+game[x+1][1]+game[x+1][0];
+    }
+    return alive_neighbor;
+}
+//manipulate the game grid based on the rule
 void game_update(){
-    int grid_temp[len_grid][len_grid]={0};
-    game_temp(game,grid_temp);
-    for(int x=0;x<len_grid;x++){
-        for(int y=0;y<len_grid;y++){
-            if(x==0 || y==0){
-                continue;
+    for(int x=0;x<height/40;x++){//row
+        for(int y=0;y<width/40;y++){//column
+            int alive_neighbor;
+            if(x==0){
+                alive_neighbor= cell_neighbor_top(y);
             }
-            int alive_neighbor= cell_neighbor(x,y);
+            else if(y==0){
+                alive_neighbor= cell_neighbor_left(x);
+            }
+            else{
+                alive_neighbor= cell_neighbor(x,y);
+            }
+
             if(game[x][y]==1 &&(alive_neighbor>3 || alive_neighbor<2)){
                 game[x][y]=0;
             }
@@ -25,8 +53,10 @@ void game_update(){
             }
         }
     }
-    game_temp(grid_temp,game);
+    game_temp(game,game_copy);
 }
+
+
 
 //get the alive neighbor number of one cell
 int cell_neighbor(int x,int y){

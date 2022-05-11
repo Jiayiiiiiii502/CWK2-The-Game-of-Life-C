@@ -4,13 +4,14 @@
 #include <stdio.h>
 #include <time.h>
 #include "gameStructure.h"
-#include "SDL/SDL2/SDL.h"
+
+
+//read game history from file to game grid
 int game_init(char* filename){
     FILE *file=fopen(filename,"rb");
         int game_width;
         int game_height;
         while(!feof(file)){
-            fscanf(file,"%d",&game_interval);
             fscanf(file,"%d",&height);
             fscanf(file,"%d",&width);
             game_width=width/20;
@@ -27,9 +28,9 @@ int game_init(char* filename){
     fclose(file);
 }
 
+//store game grid data to file
 int game_store(char* filename){
     FILE *file=fopen(filename,"wb");
-    fprintf(file,"%d\n",game_interval);
     fprintf(file,"%d\n",height);
     fprintf(file,"%d\n",width);
     int m,n;
@@ -45,6 +46,7 @@ int game_store(char* filename){
     fclose(file);
 }
 
+//load a random new game
 int game_random(){
     srand(time(NULL));
     for(int m=0;m<len_grid;m++){
@@ -55,11 +57,12 @@ int game_random(){
     }
 }
 
+// control the whole game procedure and input information
 void game_show(){
     SDL_Init(SDL_INIT_EVERYTHING);
     SDL_Window *window =SDL_CreateWindow("Game of life",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,width,height,SDL_WINDOW_RESIZABLE);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
-    SDL_Rect rect = { 1, 1, width, height };
+    //SDL_Rect rect = { 1, 1, width, height };
 
     int game_running=1;
     int game_paused=1;  //game_paused=paused
@@ -73,14 +76,17 @@ void game_show(){
                     game_running = 0;
                     break;
                 case SDL_KEYDOWN: {
+                    //read the keyboard input to switch various functions
                     if (event.key.keysym.sym == SDLK_SPACE || event.key.keysym.sym == SDLK_RETURN) {
+                        //space to keep running game
                         game_paused = !game_paused;
                         controller=0;
                     } else if (event.key.keysym.sym == SDLK_o) {
+                        //o to start a new random game
                         printf("Start a new random game!\n");
                         game_random();
                     } else if (event.key.keysym.sym == SDLK_b) {
-                        printf("Store the data and over the game!\n");
+                        //b to store current game data to file and stop the game
                         game_temp(game,game_copy);
                         game_store("history.txt");
                         game_running=0;
@@ -101,13 +107,6 @@ void game_show(){
                 controller = game_interval;
             } else {
                 controller--;
-                int m,n;
-                for(m=0;m<len_grid;m++){
-                    for(n=0;n<len_grid;n++){
-                        printf("%d ",game[m][n]);
-                    }
-                    printf("\n");
-                }
             }
         }
         game_render(renderer,game_paused);
@@ -121,6 +120,7 @@ void game_show(){
     SDL_Quit();
 }
 
+//render the game grid
 void game_render(SDL_Renderer *renderer, int game_paused){
     for(int m=0;m<len_grid;m++){
         for(int n=0;n<len_grid;n++){

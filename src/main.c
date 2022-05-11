@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "gameStructure.h"
-#include "SDL/SDL2/SDL.h";
+
 
 
 
@@ -40,19 +40,17 @@ void clear()
 }
 
 void new_game_page(){
-    printf("Please enter the game interval you wish:\n");
-    scanf("%d",&game_interval);
     printf("Please enter the width of window (40*n):\n");
     scanf("%d",&width);
     if(width%40 !=0){
         printf("Invalid choice!\n");
-        return;
+        exit(0);
     }
     printf("Please enter the height of window (40*n):\n");
     scanf("%d",&height);
     if(height%40 !=0){
         printf("Invalid choice!\n");
-        return;
+        exit(0);
     }
     printf("Enter o to begin the random game!\n");
 }
