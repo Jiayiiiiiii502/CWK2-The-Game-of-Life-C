@@ -1,36 +1,94 @@
-#include <stdio.h>
+#include <string.h>
 #include "gameStructure.h"
 
 
-
-
-//begin the game initialisation
-int main() {
-    printf("Welcome to the Game of life!\n");
-    printf("Please enter the option:\n");
-    printf("1. Start a random new game\n");
-    printf("2. Read last game from file\n");
-    int choice;
-    scanf("%d",&choice);
+int main(int argc, char **argv) {
+    printf("Welcome to life game!\n");
+    printf("1.Randomly show a game\n");
+    printf("2.Read from file\n");
+    printf("3.Exit game\n");
+    printf("\n");
+    printf("'o' to begin random new game\n");
+    printf("'space' to run/stop the game\n");
+    printf("'b' to put current game data into file and exit\n");
+    char choice[10];
+    scanf("%s", choice);
+    if(strspn(choice,"0123456789")!=strlen(choice)){
+        printf("Invalid choice\n");
+        exit(0);
+    }
+    int option;
+    option=atoi(choice);
     clear();
-    switch (choice) {
+    switch (option) {
         case 1:
             printf("Start a new game!\n");
             new_game_page();
-        break;
+            break;
         case 2:
             printf("Read game from file!\n");
-            game_init("history.txt");
-        break;
-        default: printf("Invalid choice! Please try again!\n");
+            game_init();
+            break;
+        case 3:
+            exit(0);
+        default: {
+            fflush(stdin);
+            printf("Invalid choice! Please try again!\n");
+            exit(0);
+        }
     }
     game_show();
     return 0;
 }
 
-//incorrect input
-void clear()
-{
+
+//get into the page of initial game
+void new_game_page(){
+    while(1){
+        printf("Please enter the width of game (20*n<=1000):\n");
+        char choice[10];
+        scanf("%s", choice);
+        if(strspn(choice,"0123456789")!=strlen(choice)){
+            printf("Invalid choice\n");
+            clear();
+            exit(0);
+        }
+        else{
+            int width;
+            width=atoi(choice);
+            if(width%20 !=0 || width>1000){
+                printf("Invalid choice!\n");
+                exit(0);
+            }
+        }
+        width=atoi(choice);
+
+
+        printf("Please enter the height of window (20*n<=1000):\n");
+        char option[10];
+        scanf("%s",option);
+        if(strspn(option,"0123456789")!=strlen(option)){
+            printf("Invalid choice\n");
+            exit(0);
+        }
+        else{
+            int height;
+            height=atoi(option);
+            if(height%20 !=0 ||height>1000) {
+                printf("Invalid choice!\n");
+                exit(0);
+            }
+        }
+
+        height=atoi(option);
+
+        printf("Enter o to begin the random game!\n");
+        break;
+    }
+}
+
+//clean the stream which may have invalid input
+void clear(){
     char b;
     do
     {
@@ -38,28 +96,6 @@ void clear()
     }
     while(b !='\n');
 }
-
-void new_game_page(){
-    printf("Please enter the width of window (40*n):\n");
-    scanf("%d",&width);
-    if(width%40 !=0){
-        printf("Invalid choice!\n");
-        exit(0);
-    }
-    printf("Please enter the height of window (40*n):\n");
-    scanf("%d",&height);
-    if(height%40 !=0){
-        printf("Invalid choice!\n");
-        exit(0);
-    }
-    printf("Enter o to begin the random game!\n");
-}
-
-
-
-
-
-
 
 
 
