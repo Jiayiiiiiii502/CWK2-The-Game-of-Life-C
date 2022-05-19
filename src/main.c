@@ -1,16 +1,16 @@
 #include <string.h>
 #include "gameStructure.h"
 
-
+//game instruction
+//'o' to begin random new game
+//'space' to run/stop the game
+//'b' to put current game data into file and exit
 int main(int argc, char **argv) {
     printf("Welcome to life game!\n");
     printf("1.Randomly show a game\n");
     printf("2.Read from file\n");
     printf("3.Exit game\n");
-    printf("\n");
-    printf("'o' to begin random new game\n");
-    printf("'space' to run/stop the game\n");
-    printf("'b' to put current game data into file and exit\n");
+    printf("4.Test game\n");
     char choice[10];
     scanf("%s", choice);
     if(strspn(choice,"0123456789")!=strlen(choice)){
@@ -31,6 +31,8 @@ int main(int argc, char **argv) {
             break;
         case 3:
             exit(0);
+        case 4:
+            test();
         default: {
             fflush(stdin);
             printf("Invalid choice! Please try again!\n");
@@ -45,7 +47,7 @@ int main(int argc, char **argv) {
 //get into the page of initial game
 void new_game_page(){
     while(1){
-        printf("Please enter the width of game (20*n<=1000):\n");
+        printf("Please enter the width of game (0<20*n<=1000):\n");
         char choice[10];
         scanf("%s", choice);
         if(strspn(choice,"0123456789")!=strlen(choice)){
@@ -56,7 +58,7 @@ void new_game_page(){
         else{
             int width;
             width=atoi(choice);
-            if(width%20 !=0 || width>1000){
+            if(width%20 !=0 || width>1000 ||width<=0){
                 printf("Invalid choice!\n");
                 exit(0);
             }
@@ -64,7 +66,7 @@ void new_game_page(){
         width=atoi(choice);
 
 
-        printf("Please enter the height of window (20*n<=1000):\n");
+        printf("Please enter the height of window (0<20*n<=1000):\n");
         char option[10];
         scanf("%s",option);
         if(strspn(option,"0123456789")!=strlen(option)){
@@ -74,7 +76,7 @@ void new_game_page(){
         else{
             int height;
             height=atoi(option);
-            if(height%20 !=0 ||height>1000) {
+            if(height%20 !=0 ||height>1000 ||height<=0) {
                 printf("Invalid choice!\n");
                 exit(0);
             }

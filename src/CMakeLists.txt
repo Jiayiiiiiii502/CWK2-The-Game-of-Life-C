@@ -21,4 +21,4 @@ include_directories(..)
 add_executable(CWK2_The_Game_of_Life_C
         main.c
         gameInit.c
-        game.c)
+        game.c gameTest.c)

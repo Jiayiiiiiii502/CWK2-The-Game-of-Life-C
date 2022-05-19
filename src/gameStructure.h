@@ -52,3 +52,13 @@ void game_show();
 //store current game shot into file
 void game_store();
 
+
+//gameTest.c:
+//test rules:
+void test();
+//Test rule 1: Any live cell with 0 or 1 live neighbours becomes dead
+void test_rule1();
+//Test rule 2+ rule4: Any live cell with 2 or 3 live neighbours stays alive + Any dead cell with exactly 3 live neighbours becomes alive
+void test_rule24();
+//Test rule 3: Any live cell with more than 3 live neighbours becomes dead
+int test_rule3();
