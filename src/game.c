@@ -16,7 +16,7 @@ void game_update() {
 
             int neighbours=0;
 
-            if(x==0 && y==0){
+            if(x==0 && y==0){//左上
                 neighbours=game[0][1]+game[1][0]+game[1][1];
                 if (game[y][x] == 1 && (neighbours < 2 || neighbours > 3)) {
                     grid_temp[y][x] = 0;
@@ -25,7 +25,7 @@ void game_update() {
                     grid_temp[y][x] = 1;
                 }
             }
-            if(x==(width/20)-1 && y==0){
+            else if(x==(width/20)-1 && y==0){//右上
                 neighbours=game[0][(width/20)-2]+game[1][(width/20)-2]+game[1][(width/20)-1];
                 if (game[y][x] == 1 && (neighbours < 2 || neighbours > 3)) {
                     grid_temp[y][x] = 0;
@@ -34,8 +34,9 @@ void game_update() {
                     grid_temp[y][x] = 1;
                 }
             }
-            if(x==0 && y==(height/20)-1){
-                neighbours=game[0][(height/20)-2]+game[1][(height/20)-2]+game[1][(height/20)-1];
+            else if(x==0 && y==(height/20)-1){//左下
+                neighbours=game[y][1]+game[(height/20)-2][x]+game[(height/20)-2][1];
+
                 if (game[y][x] == 1 && (neighbours < 2 || neighbours > 3)) {
                     grid_temp[y][x] = 0;
                 }
@@ -43,7 +44,7 @@ void game_update() {
                     grid_temp[y][x] = 1;
                 }
             }
-            if(x==(width/20)-1 && y==(height/20)-1){
+            else if(x==(width/20)-1 && y==(height/20)-1){//右下
                 neighbours=game[y][x-1]+game[y-1][x-1]+game[y-1][x];
                 if (game[y][x] == 1 && (neighbours < 2 || neighbours > 3)) {
                     grid_temp[y][x] = 0;
@@ -52,7 +53,7 @@ void game_update() {
                     grid_temp[y][x] = 1;
                 }
             }
-            if(x==0 && y!=0 && y!=(height/20)-1){//left
+            else if(x==0 && y!=0 && y!=(height/20)-1){//left
                 neighbours=game[y-1][0]+game[y+1][0]+game[y-1][1]+game[y][1]+game[y+1][1];
                 if (game[y][x] == 1 && (neighbours < 2 || neighbours > 3)) {
                     grid_temp[y][x] = 0;
@@ -61,7 +62,7 @@ void game_update() {
                     grid_temp[y][x] = 1;
                 }
             }
-            if(x==(width/20)-1 && y!=0 && y!=(height/20)-1){//right
+            else if(x==(width/20)-1 && y!=0 && y!=(height/20)-1){//right
                 neighbours=game[y-1][x]+game[y-1][x-1]+game[y][x-1]+game[y+1][x-1]+game[y+1][x];
                 if (game[y][x] == 1 && (neighbours < 2 || neighbours > 3)) {
                     grid_temp[y][x] = 0;
@@ -70,7 +71,7 @@ void game_update() {
                     grid_temp[y][x] = 1;
                 }
             }
-            if(y==0 && x!=0 && x!=(width/20)-1){//top
+            else if(y==0 && x!=0 && x!=(width/20)-1){//top
                 neighbours=game[0][x-1]+game[1][x-1]+game[1][x]+game[1][x+1]+game[0][x+1];
                 if (game[y][x] == 1 && (neighbours < 2 || neighbours > 3)) {
                     grid_temp[y][x] = 0;
@@ -79,7 +80,7 @@ void game_update() {
                     grid_temp[y][x] = 1;
                 }
             }
-            if(y==(height/20)-1 && x!=0 && x!=(width/20)-1){//bottom
+            else if(y==(height/20)-1 && x!=0 && x!=(width/20)-1){//bottom
                 neighbours=game[y][x-1]+game[y-1][x-1]+game[y-1][x]+game[y-1][x+1]+game[y][x+1];
                 if (game[y][x] == 1 && (neighbours < 2 || neighbours > 3)) {
                     grid_temp[y][x] = 0;

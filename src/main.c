@@ -66,7 +66,7 @@ void new_game_page(){
         width=atoi(choice);
 
 
-        printf("Please enter the height of window (0<20*n<=1000):\n");
+        printf("Please enter the height of window (same to width):\n");
         char option[10];
         scanf("%s",option);
         if(strspn(option,"0123456789")!=strlen(option)){
@@ -76,7 +76,7 @@ void new_game_page(){
         else{
             int height;
             height=atoi(option);
-            if(height%20 !=0 ||height>1000 ||height<=0) {
+            if(height!=width) {
                 printf("Invalid choice!\n");
                 exit(0);
             }
