@@ -115,7 +115,7 @@ void render_cells(SDL_Renderer *renderer, int paused) {
             if (x * len_rect < edge_x || x * len_rect > edge_x + 1500) continue; // Culling
 
             if (game[y][x] == 1) {
-                if (!paused) {
+                if (!paused && roundstate!=1) {
                     SDL_SetRenderDrawColor(renderer, 32, 36, 46, 255);
                 }
                 else {

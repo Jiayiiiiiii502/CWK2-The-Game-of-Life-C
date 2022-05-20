@@ -17,6 +17,9 @@
 #define game_interval 40
 
 
+int roundstate;
+int round_;
+
 //SDL window initialisation
 int game[len_allgrid][len_allgrid];// width max:1000; heigth max:1000
 int width,height;

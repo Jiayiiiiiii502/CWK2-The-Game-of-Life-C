@@ -54,6 +54,8 @@ void game_random() {
             game[m][n] = r > RAND_MAX / 2;
         }
     }
+    printf("You can click to initial game\n");
+
 }
 
 
@@ -72,6 +74,7 @@ void game_show(){
     // Set camera to the middle of the usable area.
 
     int interval = game_interval;
+
     while (game_running) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
@@ -79,10 +82,24 @@ void game_show(){
                 case SDL_QUIT:
                     game_running = 0;
                     break;
-                case SDL_KEYDOWN: {
+
+                case SDL_MOUSEBUTTONDOWN:{
+                    printf("Change statement: (%d,%d)\n",event.button.x,event.button.y);
+                    int x=(event.button.x/20);
+                    int y=(event.button.y/20);
+                    if(game[y][x]==0){
+                        game[y][x]=1;
+                    }
+                    else{
+                        game[y][x]=0;
+                    }
+
+                }
+                case SDL_KEYDOWN:{
                     if (event.key.keysym.sym == SDLK_SPACE || event.key.keysym.sym == SDLK_RETURN) {
                         game_paused = !game_paused;
                         interval = 0;
+                        //round--;
                     }
                     else if (event.key.keysym.sym == SDLK_o) {
                         game_random();
@@ -92,19 +109,22 @@ void game_show(){
                         game_store();
                         exit(0);
                     }
+
                 }
             }
+
+
         }
 
 
         SDL_SetRenderDrawColor(renderer, 210, 188, 167, 255);
         SDL_RenderClear(renderer);
 
-
         if (!game_paused) {
             if (interval == 0) {
                 game_update();
                 interval = game_interval;
+                round_--;
             }
             else {
                 interval--;
@@ -115,6 +135,12 @@ void game_show(){
 
         // Render everything to the screen.
         SDL_RenderPresent(renderer);
+
+        if(round_==0){
+            game_paused=!game_paused;
+            interval=1;
+            roundstate=1;
+        }
     }
 
     // Free stuff.

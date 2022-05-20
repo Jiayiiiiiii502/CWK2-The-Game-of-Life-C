@@ -47,6 +47,24 @@ int main(int argc, char **argv) {
 //get into the page of initial game
 void new_game_page(){
     while(1){
+        printf("1. Set steps\n");
+        printf("2. Start new game without setting setps\n");
+        char choice_fi[10];
+        scanf("%s", choice_fi);
+        if(strspn(choice_fi,"0123456789")!=strlen(choice_fi)){
+            printf("Invalid choice\n");
+            exit(0);
+        }
+        int option_fi;
+        option_fi=atoi(choice_fi);
+        clear();
+        if(option_fi==1){
+            printf("Please enter the steps:\n");
+            scanf("%d",&round_);
+        }
+        else{
+            round_=100;
+        }
         printf("Please enter the width of game (0<20*n<=1000):\n");
         char choice[10];
         scanf("%s", choice);
